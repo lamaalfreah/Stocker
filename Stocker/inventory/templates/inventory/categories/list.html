@@ -1,0 +1,25 @@
+{% extends 'main/base.html' %}
+{% block title %}Categories{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h3>Categories</h3>
+  {% if request.user.is_staff %}<a class="btn btn-primary" href="{% url 'inventory:category_create' %}">+ Add</a>{% endif %}
+</div>
+<ul class="list-group">
+  {% for c in categories %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      {{ c.name }}
+      {% if request.user.is_staff %}
+        <span>
+          <a class="btn btn-sm btn-outline-secondary" href="{% url 'inventory:category_update' c.pk %}">Edit</a>
+          <form method="post" action="{% url 'inventory:category_delete' c.pk %}" class="d-inline">
+            {% csrf_token %}<button class="btn btn-sm btn-outline-danger">Delete</button>
+          </form>
+        </span>
+      {% endif %}
+    </li>
+  {% empty %}
+    <li class="list-group-item text-center">No data</li>
+  {% endfor %}
+</ul>
+{% endblock %}

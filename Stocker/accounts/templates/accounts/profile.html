@@ -1,0 +1,24 @@
+{% extends 'main/base.html'%}
+{% block title %}Profile – {{ user.username }}{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-12 col-md-3 text-center mb-5">
+    <img src="{{ user.profile.avatar.url }}" class="w-100 rounded-circle mb-2" style="max-width: 150px" alt="avatar"/>
+    <h5 class="mb-1">@{{ user.username }}</h5>
+
+    {% if request.user == user %}
+      <a class="btn btn-outline-primary btn-sm" href="{% url 'accounts:update_user_profile' %}">
+        Edit Profile
+      </a>
+    {% endif %}
+  </div>
+
+  <div class="col-12 col-md-9">
+    <div class="card p-3">
+      <h4 class="mb-2">About</h4>
+      <p class="mb-0">{{ user.profile.about|default:"—" }}</p>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends 'main/base.html'%}
+{% block title %}Update {{ request.user.username }}{% endblock %}
+
+{% block content %}
+<div class="container d-flex flex-column justify-content-center align-items-center">
+  <h2>Update Profile</h2>
+
+  <form class="d-flex flex-column gap-3 w-100 w-md-50"
+        action="{% url 'accounts:update_user_profile' %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <div class="form-floating">
+      <input type="email" class="form-control" id="upEmail" placeholder="name@example.com"
+             name="email" required value="{{ request.user.email }}">
+      <label for="upEmail">Email</label>
+    </div>
+
+    <div class="form-floating">
+      <input type="text" class="form-control" id="upFirstName" placeholder="First name"
+             name="first_name" required value="{{ request.user.first_name }}">
+      <label for="upFirstName">First name</label>
+    </div>
+
+    <div class="form-floating">
+      <input type="text" class="form-control" id="upLastName" placeholder="Last name"
+             name="last_name" required value="{{ request.user.last_name }}">
+      <label for="upLastName">Last name</label>
+    </div>
+
+    <div>
+      <label class="form-label">About</label>
+      <textarea class="form-control" name="about" rows="4">{{ request.user.profile.about }}</textarea>
+    </div>
+
+    <div>
+      <label class="form-label d-block">Current Avatar</label>
+      <img src="{{ request.user.profile.avatar.url }}" class="rounded-4 mb-2" style="max-width:120px;" alt="avatar"/>
+      <input type="file" name="avatar" accept="image/*" class="form-control" />
+    </div>
+
+    <button class="btn btn-primary w-100 py-2" type="submit">Update</button>
+  </form>
+</div>
+{% endblock %}

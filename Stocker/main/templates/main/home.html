@@ -1,0 +1,9 @@
+{% extends 'main/base.html' %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<div class="text-center py-5">
+  <h1>Welcome to Stocker</h1>
+  <p class="text-muted">Manage your pharmacy inventory.</p>
+  <a href="{% url 'main:dashboard' %}" class="btn btn-primary">Go to Dashboard</a>
+</div>
+{% endblock %}

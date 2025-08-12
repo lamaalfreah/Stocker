@@ -1,0 +1,46 @@
+{% extends 'main/base.html' %}
+{% block title %}Inventory Report{% endblock %}
+{% block content %}
+<h3 class="mb-3">Inventory Report</h3>
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <div class="text-muted">Total stock value: <strong>{{ total_value|default:"0.00" }}</strong></div>
+  <a class="btn btn-sm btn-outline-secondary" href="{% url 'reports:export_inventory_csv' %}">Export CSV</a>
+</div>
+
+<h5>By Category</h5>
+<table class="table table-sm table-striped mb-4">
+  <thead><tr><th>Category</th><th class="text-end"># Products</th><th class="text-end">Stock Value</th></tr></thead>
+  <tbody>
+    {% for r in by_category %}
+      <tr>
+        <td>{{ r.category__name|default:"(No category)" }}</td>
+        <td class="text-end">{{ r.products_count }}</td>
+        <td class="text-end">{{ r.stock_value|default:"0.00" }}</td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="3" class="text-center">No data</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<h5>Low stock</h5>
+<ul class="list-group mb-4">
+  {% for p in low_stock %}
+    <li class="list-group-item d-flex justify-content-between">
+      <span>{{ p.name }} (Qty: {{ p.quantity }})</span>
+      <a class="btn btn-sm btn-outline-secondary" href="{% url 'inventory:product_update' p.pk %}">Update</a>
+    </li>
+  {% empty %}<li class="list-group-item text-center">No items</li>{% endfor %}
+</ul>
+
+<h5>Near expiry (≤ 30 days)</h5>
+<ul class="list-group">
+  {% for p in near_expiry %}
+    <li class="list-group-item d-flex justify-content-between">
+      <span>{{ p.name }} — {{ p.expiry_date }}</span>
+      <a class="btn btn-sm btn-outline-secondary" href="{% url 'inventory:product_update' p.pk %}">Update</a>
+    </li>
+  {% empty %}<li class="list-group-item text-center">No items</li>{% endfor %}
+</ul>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'main/base.html' %}
+{% block title %}Reports & Analytics{% endblock %}
+{% block content %}
+<h3 class="mb-4">Reports & Analytics</h3>
+
+<div class="row g-3 mb-4">
+  <div class="col-md-3">
+    <div class="card p-3">
+      <div class="text-muted">Total stock value</div>
+      <div class="fs-3">{{ total_value|default:"0.00" }}</div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card p-3">
+      <div class="text-muted">Total products</div>
+      <div class="fs-3">{{ total_products }}</div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card p-3">
+      <div class="text-muted">Low stock</div>
+      <div class="fs-3">{{ low_count }}</div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card p-3">
+      <div class="text-muted">Near expiry (≤30d)</div>
+      <div class="fs-3">{{ near_count }}</div>
+    </div>
+  </div>
+</div>
+
+<div class="d-flex gap-2">
+  <a class="btn btn-primary" href="{% url 'reports:inventory_report' %}">Inventory report</a>
+  <a class="btn btn-outline-primary" href="{% url 'reports:supplier_report' %}">Supplier report</a>
+</div>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'main/base.html' %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="row g-3">
+  <div class="col-md-6">
+    <h4>Low stock</h4>
+    <ul class="list-group">
+      {% for p in low_stock %}
+        <li class="list-group-item d-flex justify-content-between">
+          <span>{{ p.name }} — Qty: {{ p.quantity }}</span>
+          <a href="{% url 'inventory:product_update' p.pk %}" class="btn btn-sm btn-outline-secondary">Update</a>
+        </li>
+      {% empty %}<li class="list-group-item text-center">No items</li>{% endfor %}
+    </ul>
+  </div>
+
+  <div class="col-md-6">
+    <h4>Near expiry</h4>
+    <ul class="list-group">
+      {% for p in near_expiry %}
+        <li class="list-group-item d-flex justify-content-between">
+          <span>{{ p.name }} — {{ p.expiry_date }}</span>
+          <a href="{% url 'inventory:product_update' p.pk %}" class="btn btn-sm btn-outline-secondary">Update</a>
+        </li>
+      {% empty %}<li class="list-group-item text-center">No items</li>{% endfor %}
+    </ul>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'main/base.html' %}
+{% block title %}Stock Status{% endblock %}
+{% block content %}
+<h3 class="mb-3">Low Stock</h3>
+<ul class="list-group mb-4">
+  {% for p in low_stock %}
+    <li class="list-group-item d-flex justify-content-between">
+      <span>{{ p.name }} ({{ p.quantity }})</span>
+      <a class="btn btn-sm btn-outline-secondary" href="{% url 'inventory:product_update' p.pk %}">Update</a>
+    </li>
+  {% empty %}
+    <li class="list-group-item text-center">No items.</li>
+  {% endfor %}
+</ul>
+
+<h3 class="mb-3">Near Expiry (≤ 30 days)</h3>
+<ul class="list-group">
+  {% for p in near_expiry %}
+    <li class="list-group-item d-flex justify-content-between">
+      <span>{{ p.name }} — {{ p.expiry_date }}</span>
+      <a class="btn btn-sm btn-outline-secondary" href="{% url 'inventory:product_update' p.pk %}">Update</a>
+    </li>
+  {% empty %}
+    <li class="list-group-item text-center">No items.</li>
+  {% endfor %}
+</ul>
+{% endblock %}

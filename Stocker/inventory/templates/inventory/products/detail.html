@@ -1,0 +1,18 @@
+{% extends 'main/base.html' %}
+{% block title %}{{ product.name }}{% endblock %}
+{% block content %}
+<h3>{{ product.name }} {{ product.strength }}</h3>
+<ul>
+  <li>Form: {{ product.form|default:"-" }}</li>
+  <li>Category: {{ product.category|default:"-" }}</li>
+  <li>Qty: {{ product.quantity }} (Reorder ≤ {{ product.reorder_level }})</li>
+  <li>Expiry: {{ product.expiry_date|default:"-" }}</li>
+  <li>Suppliers: {% for s in product.suppliers.all %}{{ s.name }}{% if not forloop.last %}, {% endif %}{% empty %}-{% endfor %}</li>
+</ul>
+{% if request.user.is_staff %}
+  <form method="post" action="{% url 'inventory:product_delete' product.pk %}">
+    {% csrf_token %}
+    <button class="btn btn-outline-danger">Delete</button>
+  </form>
+{% endif %}
+{% endblock %}
