@@ -134,8 +134,12 @@ As an Inventory Manager, I want to export inventory data to CSV files so that I 
 
 
 ## To be provided by you
-- UML link here.
-- wireframe link here.
+- UML:
+<img width="1771" style="width:100%" alt="UML" src="assets/StockerUML.png">
+
+- wireframe:
+<img width="1771" style="width:100%" alt="Wireframe" src="assets/StockerWireframes.png">
+
 
 ## Note:
 - use best practices.
